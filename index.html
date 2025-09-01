@@ -2,85 +2,77 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mi primera página · Cards animadas</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barranquilla + Imagen aleatoria</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <div class="wrapper">
-    <header class="page-title">
-      <h1>Estadio Metropolitano de Barranquilla</h1>
-      <p class="subtitle">Demo: cards con fondo animado, zoom-in y fade</p>
-    </header>
-
-    <main class="grid" aria-live="polite">
-      <!-- Card 1 -->
-      <article class="card" tabindex="0">
-        <figure class="media">
-          <img loading="lazy"
-               src="https://barranquilla.gov.co/wp-content/uploads/2018/05/barranquilla_01488-e1526962960257.jpg"
-               alt="Estadio Metropolitano de Barranquilla">
-        </figure>
-        <div class="content">
-          <h2>Estadio Metropolitano de Barranquilla</h2>
-          <p>Icono deportivo de la ciudad.</p>
-        </div>
-      </article>
-
-      <!-- Card 2 -->
-      <article class="card" tabindex="0">
-        <figure class="media">
-          <img loading="lazy"
-               src="https://i.pinimg.com/736x/ea/c6/35/eac6359e09b915a9530f78563e6ddcea.jpg"
-               alt="El mejor ingeniero del mundo">
-        </figure>
-        <div class="content">
-          <h2>El mejor ingeniero del mundo</h2>
-          <p>Inspiración y disciplina.</p>
-        </div>
-      </article>
-
-      <!-- Card 3 -->
-      <article class="card" tabindex="0">
-        <figure class="media">
-          <img loading="lazy"
-               src="https://picsum.photos/600/600"
-               alt="Imagen aleatoria de prueba">
-        </figure>
-        <div class="content">
-          <h2>Imagen Aleatoria de prueba</h2>
-          <p>Foto aleatoria (picsum).</p>
-        </div>
-      </article>
-
-      <!-- Card 4 (GIF) -->
-      <article class="card" tabindex="0">
-        <figure class="media">
-          <img loading="lazy"
-               src="https://media.tenor.com/YVKFAnJwA-oAAAAM/loyd.gif"
-               alt="GIF de Loid Forger">
-        </figure>
-        <div class="content">
-          <h2>Imagen de prueba 2</h2>
-          <p>Animación GIF.</p>
-        </div>
-      </article>
-
-      <!-- Card 5 -->
-      <article class="card" tabindex="0">
-        <figure class="media">
-          <img loading="lazy"
-               src="https://sm.ign.com/ign_es/screenshot/default/squirtle-1-1119670-1280x0_mbcx.jpg"
-               alt="Squirtle">
-        </figure>
-        <div class="content">
-          <h2>Imagen de prueba 3</h2>
-          <p>Un clásico favorito.</p>
-        </div>
-      </article>
-    </main>
+<body class="theme-1">
+  <!-- Overlay de inicio -->
+  <div id="overlay" class="overlay" aria-labelledby="ov-title" aria-describedby="ov-desc">
+    <div class="overlay-card">
+      <h1 id="ov-title">¡Bienvenido!</h1>
+      <p id="ov-desc" class="sub">Pulsa para iniciar la experiencia</p>
+      <button id="startBtn" class="btn start">
+        <span class="icon" aria-hidden="true">
+          <!-- Icono pala (SVG) -->
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.59 2.59a2 2 0 0 1 2.82 0l4 4a2 2 0 0 1 0 2.82l-2.12 2.12a3 3 0 0 1-2.12.88h-.59l-6.3 6.3a3.75 3.75 0 1 1-5.3-5.3l6.3-6.3v-.59c0-.8.32-1.56.88-2.12l2.12-2.12Zm1.41 1.41L13.88 6.12c-.19.19-.29.44-.29.71v1.17l-7.1 7.1a1.75 1.75 0 1 0 2.47 2.47l7.1-7.1h1.17c.27 0 .52-.11.71-.29l2.12-2.12-2.16-2.16Z"/>
+          </svg>
+        </span>
+        Empecemos ingeniero
+      </button>
+    </div>
   </div>
 
-  <script src="app.js" defer></script>
+  <main class="wrap" id="app" aria-live="polite">
+    <!-- Card 1: Base64 -->
+    <article class="card revealable" data-delay="0">
+      <header>
+        <h1>Estadio Metropolitano de Barranquilla</h1>
+        <p class="sub">Imagen embebida en base64</p>
+      </header>
+      <div class="media">
+        <img
+          src="data:image/jpeg;base64,AQUI_TU_CADENA_BASE64_COMPLETA"
+          alt="Estadio Metropolitano de Barranquilla"
+        />
+      </div>
+    </article>
+
+    <!-- Card 2: Externa -->
+    <article class="card revealable" data-delay="300">
+      <header>
+        <h1>Ventana del Mundo de Barranquilla</h1>
+        <p class="sub">Imagen externa (Portafolio)</p>
+      </header>
+      <div class="media">
+        <img
+          src="https://m.portafolio.co/files/article_content/uploads/2018/08/14/5b73a2e753501.jpeg"
+          alt="Ventana del Mundo de Barranquilla"
+        />
+      </div>
+    </article>
+
+    <!-- Card 3: Imagen aleatoria -->
+    <article class="card revealable" data-delay="600" aria-labelledby="title" aria-describedby="desc">
+      <header>
+        <h1 id="title">Imagen aleatoria de Picsum</h1>
+        <p id="desc" class="sub">Pulsa el botón para generar otra imagen (600×600)</p>
+      </header>
+      <div class="media">
+        <div id="skeleton" class="skeleton" aria-hidden="true"></div>
+        <img id="randomImg" src="" alt="Imagen aleatoria de Picsum" />
+      </div>
+      <footer>
+        <div class="btns">
+          <button class="btn" id="btnNew">Crear imagen aleatoria</button>
+          <button class="btn ghost" id="btnDownload" title="Descargar imagen actual">Descargar</button>
+        </div>
+        <span id="meta" class="meta"></span>
+      </footer>
+    </article>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>

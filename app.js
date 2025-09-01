@@ -1,34 +1,59 @@
-// Activa el modo .js y aplica la animación cuando las cards entren al viewport
-(function () {
-  // Marca <html> con .js para habilitar estilos de animación
-  document.documentElement.classList.add('js');
+// Rotación de fondos cada 5s
+const themes = ["theme-1","theme-2","theme-3","theme-4","theme-5"];
+let idx=0;
+setInterval(()=>{
+  idx=(idx+1)%themes.length;
+  document.body.className=themes[idx];
+},5000);
 
-  // Espera a que el DOM esté listo (extra robusto)
-  const ready = () => {
-    const cards = document.querySelectorAll('.card');
+// Overlay y revelado progresivo
+const overlay=document.getElementById('overlay');
+const startBtn=document.getElementById('startBtn');
 
-    // Fallback si IntersectionObserver no existe
-    if (!('IntersectionObserver' in window)) {
-      cards.forEach(c => c.classList.add('show'));
-      return;
-    }
+function revealCards(){
+  document.querySelectorAll('.revealable').forEach(card=>{
+    const delay=+card.dataset.delay||0;
+    setTimeout(()=>card.classList.add('show'),delay);
+  });
+}
 
-    const obs = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.18 });
+startBtn.addEventListener('click',()=>{
+  overlay.classList.add('hide');
+  overlay.addEventListener('animationend',()=>overlay.remove(),{once:true});
+  revealCards();
+});
 
-    cards.forEach(card => obs.observe(card));
+// Imagen aleatoria con skeleton
+const img=document.getElementById('randomImg');
+const skeleton=document.getElementById('skeleton');
+const btnNew=document.getElementById('btnNew');
+const btnDownload=document.getElementById('btnDownload');
+const meta=document.getElementById('meta');
+
+function newSeed(){ return Date.now()+"-"+Math.random().toString(36).slice(2,7); }
+
+function updateMeta(url){
+  const t=new Date();
+  meta.textContent=`Fuente: picsum.photos · ${t.toLocaleTimeString()} (${t.toLocaleDateString()})`;
+  btnDownload.dataset.url=url;
+}
+
+function loadImage(){
+  const url=`https://picsum.photos/seed/${newSeed()}/600/600`;
+  skeleton.style.display='block'; img.classList.remove('loaded');
+  const pre=new Image();
+  pre.onload=()=>{
+    img.src=url;
+    requestAnimationFrame(()=>{
+      skeleton.style.display='none'; img.classList.add('loaded'); updateMeta(url);
+    });
   };
+  pre.onerror=()=>{ skeleton.style.display='none'; meta.textContent='Error al cargar la imagen.'; };
+  pre.src=url;
+}
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', ready);
-  } else {
-    ready();
-  }
-})();
-
+btnNew.addEventListener('click',loadImage);
+btnDownload.addEventListener('click',()=>{
+  const url=btnDownload.dataset.url||img.src; if(!url) return;
+  const a=document.createElement('a'); a.href=url; a.download='picsum.jpg'; document.body.appendChild(a); a.click(); a.remove();
+});

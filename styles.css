@@ -1,114 +1,47 @@
-/* ---- Reset ---- */
-*, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-img { display: block; max-width: 100%; height: auto; }
-
-/* ---- Tema ---- */
 :root{
-  --surface: rgba(255,255,255,0.85);
-  --border: rgba(255,255,255,0.7);
-  --radius: 18px;
-  --shadow: 0 10px 24px rgba(0,0,0,0.12);
-  --shadow-hover: 0 20px 40px rgba(0,0,0,0.16);
-  --text: #0f172a;
+  --bg:#0f172a;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+  --ring:rgba(34,211,238,.35);
+  --accent:#22d3ee;
+  --accent-2:#38bdf8;
 }
 
-body{
-  min-height:100vh;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
-  color: var(--text);
-  background:
-    radial-gradient(900px 600px at 10% 20%, #dbeafe 0%, transparent 60%),
-    radial-gradient(800px 500px at 90% 0%, #fde68a 0%, transparent 55%),
-    linear-gradient(120deg, #0ea5e9, #22c55e, #a855f7);
-  background-size: auto, auto, 200% 200%;
-  animation: bgShift 18s ease-in-out infinite alternate;
-}
-@keyframes bgShift {
-  0%   { background-position: 0 0, 0 0, 0% 50%; }
-  100% { background-position: 0 0, 0 0, 100% 50%; }
-}
-@media (prefers-reduced-motion: reduce){ body{ animation: none; } }
+/* Temas de fondo */
+body{ transition: background 1s ease; color:var(--text); font-family:sans-serif; margin:0; min-height:100dvh; }
+body.theme-1{ background:#0f172a; }
+body.theme-2{ background:linear-gradient(180deg,#0b1020,#111827); }
+body.theme-3{ background:linear-gradient(180deg,#111827,#1e293b); }
+body.theme-4{ background:linear-gradient(180deg,#0f172a,#0b3b35); }
+body.theme-5{ background:linear-gradient(180deg,#0f172a,#3b0f2a); }
 
-/* ---- Layout ---- */
-.wrapper { max-width: 1200px; margin: 0 auto; padding: 28px; }
-.page-title { text-align:center; color:#0b1220; }
-.page-title h1{ margin: 8px 0 4px; font-weight: 800; letter-spacing:.2px; }
-.subtitle{ margin:0; opacity:.8; }
+.wrap{ width:100%; max-width:1200px; margin:0 auto; padding:32px; display:grid; gap:24px; }
 
-.grid{
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 22px;
-}
+/* Overlay inicio */
+.overlay{ position:fixed; inset:0; display:grid; place-items:center; backdrop-filter: blur(3px); background: rgba(2,6,23,.6); z-index:10; animation:fadeIn .4s ease both; }
+.overlay.hide{ animation:fadeOut .45s ease both; }
+.overlay-card{ width:min(92vw,560px); background:rgba(255,255,255,.05); border:1px solid rgba(148,163,184,.18); border-radius:24px; padding:28px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.35); }
 
-/* ---- Card (visible por defecto) ---- */
-.card{
-  position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  /* por defecto visibles (fallback sin JS) */
-  transform: none;
-  opacity: 1;
-  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, opacity .45s ease;
-  backdrop-filter: blur(4px);
-}
-.card:hover, .card:focus-within{
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: var(--shadow-hover);
-}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
 
-/* Brillo sutil en hover */
-.card::after{
-  content:"";
-  position:absolute; inset:0;
-  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.45) 45%, transparent 60%);
-  transform: translateX(-120%);
-  pointer-events:none;
-}
-.card:hover::after{ transform: translateX(120%); transition: transform .9s ease; }
+.card{ background:rgba(255,255,255,.04); border:1px solid rgba(148,163,184,.18); border-radius:24px; overflow:hidden; backdrop-filter:blur(4px); box-shadow:0 10px 30px rgba(0,0,0,.35); transition:.35s ease; opacity:1; }
+.card:hover{ transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.45); }
 
-/* ---- Media ---- */
-.media{ height: 220px; background:#e5e7eb; overflow: hidden; }
-.media img{
-  width: 100%; height: 100%; object-fit: cover;
-  /* visibles por defecto (sin JS) */
-  transform: scale(1);
-  opacity: 1;
-  transition: transform .9s cubic-bezier(.2,.8,.2,1), opacity .9s ease;
-}
+.revealable{ opacity:0; transform:translateY(12px); transition:opacity .6s ease, transform .6s ease; }
+.revealable.show{ opacity:1; transform:translateY(0); }
 
-/* ====== Modo animado (solo si hay JS) ====== */
-.js .card{
-  transform: translateY(14px) scale(.98);
-  opacity: 0;
-}
-.js .card.show{
-  transform: none;
-  opacity: 1;
-}
-.js .media img{
-  transform: scale(1.08);
-  opacity: 0;
-  filter: saturate(.95) contrast(.97);
-}
-.js .card.show .media img{
-  transform: scale(1);
-  opacity: 1;
-  filter: none;
-}
-.js .card.show:hover .media img{
-  transform: scale(1.03);
-}
+.media{ position:relative; aspect-ratio:16/9; background:#0b1220; display:grid; place-items:center; }
+.media img{ width:100%; height:100%; object-fit:cover; }
 
-/* ---- Contenido ---- */
-.content{ padding: 14px 14px 18px; }
-.content h2{ margin: 4px 0 6px; font-size: 1.05rem; line-height: 1.2; }
-.content p{ margin:0; font-size:.92rem; opacity:.85; }
+.skeleton{ position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.08),rgba(255,255,255,.05)); background-size:200% 100%; animation:shimmer 1.2s linear infinite; }
+@keyframes shimmer{ to{ background-position:-200% 0 } }
 
-/* ---- Accesibilidad ---- */
-.card:focus-within{ outline: 2px solid #22c55e55; outline-offset: 2px; }
+footer{ padding:16px; display:flex; gap:12px; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+
+.btn{ border:1px solid rgba(148,163,184,.45); background:rgba(56,189,248,.3); color:#081724; font-weight:700; padding:12px 16px; border-radius:14px; cursor:pointer; transition:.2s; }
+.btn:hover{ filter:brightness(1.1); }
+.btn.ghost{ background:transparent; color:var(--text); border:1px dashed rgba(148,163,184,.35); }
+.btn.start{ display:inline-flex; align-items:center; gap:10px; font-size:1rem; }
+
+.meta{ font-size:.9rem; color:var(--muted); }
