@@ -1,9 +1,9 @@
-/* ---- Reset básico ---- */
+/* ---- Reset ---- */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 img { display: block; max-width: 100%; height: auto; }
 
-/* ---- Variables y tema ---- */
+/* ---- Tema ---- */
 :root{
   --surface: rgba(255,255,255,0.85);
   --border: rgba(255,255,255,0.7);
@@ -24,15 +24,11 @@ body{
   background-size: auto, auto, 200% 200%;
   animation: bgShift 18s ease-in-out infinite alternate;
 }
-
 @keyframes bgShift {
   0%   { background-position: 0 0, 0 0, 0% 50%; }
   100% { background-position: 0 0, 0 0, 100% 50%; }
 }
-
-@media (prefers-reduced-motion: reduce){
-  body{ animation: none; }
-}
+@media (prefers-reduced-motion: reduce){ body{ animation: none; } }
 
 /* ---- Layout ---- */
 .wrapper { max-width: 1200px; margin: 0 auto; padding: 28px; }
@@ -47,7 +43,7 @@ body{
   gap: 22px;
 }
 
-/* ---- Card ---- */
+/* ---- Card (visible por defecto) ---- */
 .card{
   position: relative;
   background: var(--surface);
@@ -55,26 +51,18 @@ body{
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
-  transform: translateY(14px) scale(.98);
-  opacity: 0;
-  transition: transform .35s cubic-bezier(.2,.8,.2,1),
-              box-shadow .35s ease,
-              opacity .45s ease;
-  backdrop-filter: blur(4px);
-}
-
-.card.show{
+  /* por defecto visibles (fallback sin JS) */
   transform: none;
   opacity: 1;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, opacity .45s ease;
+  backdrop-filter: blur(4px);
 }
-
-.card:hover,
-.card:focus-within{
+.card:hover, .card:focus-within{
   transform: translateY(-6px) scale(1.01);
   box-shadow: var(--shadow-hover);
 }
 
-/* Efecto brillo sutil al pasar */
+/* Brillo sutil en hover */
 .card::after{
   content:"";
   position:absolute; inset:0;
@@ -82,39 +70,38 @@ body{
   transform: translateX(-120%);
   pointer-events:none;
 }
-.card:hover::after{
-  transform: translateX(120%);
-  transition: transform .9s ease;
-}
+.card:hover::after{ transform: translateX(120%); transition: transform .9s ease; }
 
-/* ---- Imagen con zoom-in + fade al aparecer ---- */
-.media{
-  height: 220px;
-  background:#e5e7eb;
-  overflow: hidden;
-}
-
+/* ---- Media ---- */
+.media{ height: 220px; background:#e5e7eb; overflow: hidden; }
 .media img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.08);          /* inicio: un poco ampliada */
-  opacity: 0;                      /* inicio: invisible */
-  transition: transform .9s cubic-bezier(.2,.8,.2,1),
-              opacity .9s ease;
-  will-change: transform, opacity;
+  width: 100%; height: 100%; object-fit: cover;
+  /* visibles por defecto (sin JS) */
+  transform: scale(1);
+  opacity: 1;
+  transition: transform .9s cubic-bezier(.2,.8,.2,1), opacity .9s ease;
+}
+
+/* ====== Modo animado (solo si hay JS) ====== */
+.js .card{
+  transform: translateY(14px) scale(.98);
+  opacity: 0;
+}
+.js .card.show{
+  transform: none;
+  opacity: 1;
+}
+.js .media img{
+  transform: scale(1.08);
+  opacity: 0;
   filter: saturate(.95) contrast(.97);
 }
-
-/* cuando la card entra al viewport: zoom a 1 + fade in */
-.card.show .media img{
+.js .card.show .media img{
   transform: scale(1);
   opacity: 1;
   filter: none;
 }
-
-/* micro-zoom en hover para dar vida */
-.card.show:hover .media img{
+.js .card.show:hover .media img{
   transform: scale(1.03);
 }
 
