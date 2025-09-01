@@ -1,0 +1,127 @@
+/* ---- Reset básico ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img { display: block; max-width: 100%; height: auto; }
+
+/* ---- Variables y tema ---- */
+:root{
+  --surface: rgba(255,255,255,0.85);
+  --border: rgba(255,255,255,0.7);
+  --radius: 18px;
+  --shadow: 0 10px 24px rgba(0,0,0,0.12);
+  --shadow-hover: 0 20px 40px rgba(0,0,0,0.16);
+  --text: #0f172a;
+}
+
+body{
+  min-height:100vh;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
+  color: var(--text);
+  background:
+    radial-gradient(900px 600px at 10% 20%, #dbeafe 0%, transparent 60%),
+    radial-gradient(800px 500px at 90% 0%, #fde68a 0%, transparent 55%),
+    linear-gradient(120deg, #0ea5e9, #22c55e, #a855f7);
+  background-size: auto, auto, 200% 200%;
+  animation: bgShift 18s ease-in-out infinite alternate;
+}
+
+@keyframes bgShift {
+  0%   { background-position: 0 0, 0 0, 0% 50%; }
+  100% { background-position: 0 0, 0 0, 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body{ animation: none; }
+}
+
+/* ---- Layout ---- */
+.wrapper { max-width: 1200px; margin: 0 auto; padding: 28px; }
+.page-title { text-align:center; color:#0b1220; }
+.page-title h1{ margin: 8px 0 4px; font-weight: 800; letter-spacing:.2px; }
+.subtitle{ margin:0; opacity:.8; }
+
+.grid{
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+/* ---- Card ---- */
+.card{
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transform: translateY(14px) scale(.98);
+  opacity: 0;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1),
+              box-shadow .35s ease,
+              opacity .45s ease;
+  backdrop-filter: blur(4px);
+}
+
+.card.show{
+  transform: none;
+  opacity: 1;
+}
+
+.card:hover,
+.card:focus-within{
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Efecto brillo sutil al pasar */
+.card::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.45) 45%, transparent 60%);
+  transform: translateX(-120%);
+  pointer-events:none;
+}
+.card:hover::after{
+  transform: translateX(120%);
+  transition: transform .9s ease;
+}
+
+/* ---- Imagen con zoom-in + fade al aparecer ---- */
+.media{
+  height: 220px;
+  background:#e5e7eb;
+  overflow: hidden;
+}
+
+.media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);          /* inicio: un poco ampliada */
+  opacity: 0;                      /* inicio: invisible */
+  transition: transform .9s cubic-bezier(.2,.8,.2,1),
+              opacity .9s ease;
+  will-change: transform, opacity;
+  filter: saturate(.95) contrast(.97);
+}
+
+/* cuando la card entra al viewport: zoom a 1 + fade in */
+.card.show .media img{
+  transform: scale(1);
+  opacity: 1;
+  filter: none;
+}
+
+/* micro-zoom en hover para dar vida */
+.card.show:hover .media img{
+  transform: scale(1.03);
+}
+
+/* ---- Contenido ---- */
+.content{ padding: 14px 14px 18px; }
+.content h2{ margin: 4px 0 6px; font-size: 1.05rem; line-height: 1.2; }
+.content p{ margin:0; font-size:.92rem; opacity:.85; }
+
+/* ---- Accesibilidad ---- */
+.card:focus-within{ outline: 2px solid #22c55e55; outline-offset: 2px; }

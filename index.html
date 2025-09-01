@@ -1,28 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi primera pagina</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi primera página · Cards animadas</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <center>
-        <h1>Estadio Metropolitano de Barranquilla</h1>
-        <img src="https://barranquilla.gov.co/wp-content/uploads/2018/05/barranquilla_01488-e1526962960257.jpg" alt="Imagen del estadio Metropolitano de barranquilla">
-        <br>
-        <h2>El mejor ingeniero del mundo</h2>
-        <img src="https://i.pinimg.com/736x/ea/c6/35/eac6359e09b915a9530f78563e6ddcea.jpg" alt="Imagen del mejor ingeniero del mundo">
-        <br>
-        <h3>Imagen Aleatoria de prueba</h3>
-        <img src="https://picsum.photos/600/600" alt="Imagen aleatoria de prueba">
-        <br>
-        <h4>Imagen de prueba 2</h4>
-        <img src="https://media.tenor.com/YVKFAnJwA-oAAAAM/loyd.gif" alt="Imagen de Lloid frontera">
-        <br>
-        <h5>Imagen de prueba 3</h5>
-        <img src="https://sm.ign.com/ign_es/screenshot/default/squirtle-1-1119670-1280x0_mbcx.jpg" alt="Imagen de prueba 3">
-        <br>
-    </center>
-    
+  <div class="wrapper">
+    <header class="page-title">
+      <h1>Estadio Metropolitano de Barranquilla</h1>
+      <p class="subtitle">Demo: cards con fondo animado, zoom-in y fade</p>
+    </header>
+
+    <main class="grid" aria-live="polite">
+      <!-- Card 1 -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://barranquilla.gov.co/wp-content/uploads/2018/05/barranquilla_01488-e1526962960257.jpg"
+               alt="Estadio Metropolitano de Barranquilla">
+        </figure>
+        <div class="content">
+          <h2>Estadio Metropolitano de Barranquilla</h2>
+          <p>Icono deportivo de la ciudad.</p>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://i.pinimg.com/736x/ea/c6/35/eac6359e09b915a9530f78563e6ddcea.jpg"
+               alt="El mejor ingeniero del mundo">
+        </figure>
+        <div class="content">
+          <h2>El mejor ingeniero del mundo</h2>
+          <p>Inspiración y disciplina.</p>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://picsum.photos/600/600"
+               alt="Imagen aleatoria de prueba">
+        </figure>
+        <div class="content">
+          <h2>Imagen Aleatoria de prueba</h2>
+          <p>Foto aleatoria (picsum).</p>
+        </div>
+      </article>
+
+      <!-- Card 4 (GIF) -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://media.tenor.com/YVKFAnJwA-oAAAAM/loyd.gif"
+               alt="GIF de Loid Forger">
+        </figure>
+        <div class="content">
+          <h2>Imagen de prueba 2</h2>
+          <p>Animación GIF.</p>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://sm.ign.com/ign_es/screenshot/default/squirtle-1-1119670-1280x0_mbcx.jpg"
+               alt="Squirtle">
+        </figure>
+        <div class="content">
+          <h2>Imagen de prueba 3</h2>
+          <p>Un clásico favorito.</p>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script src="app.js" defer></script>
 </body>
 </html>
