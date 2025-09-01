@@ -3,32 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Imagen aleatoria | Card animada</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Mi pagina · Cards animadas</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js');</script>
 </head>
-<body>
-  <div class="wrap">
-    <article class="card" aria-labelledby="title" aria-describedby="desc">
-      <header>
-        <h1 id="title">Imagen aleatoria de <span style="color:#38bdf8">Picsum</span></h1>
-        <p id="desc" class="sub">Pulsa el botón para generar otra imagen (600×600). Hay animación y skeleton ✨</p>
-      </header>
+<body class="theme-1">
+  <div class="wrapper">
+    <header class="page-title">
+      <h1>Mi pagina</h1>
+      <p class="subtitle">Demo: cards con fondo animado, zoom-in y fade</p>
 
-      <div class="media">
-        <div id="skeleton" class="skeleton" aria-hidden="true"></div>
-        <img id="randomImg" src="" alt="Imagen aleatoria de Picsum" />
-      </div>
+      <button id="startBtn" class="cta" type="button" aria-controls="gallery" aria-expanded="false">
+        Empecemos Ingeniero!
+      </button>
+      <p class="hint">Click para mostrar la galería. Luego, cada click cambia el color del fondo.</p>
+    </header>
 
-      <footer>
-        <div class="btns">
-          <button class="btn" id="btnNew" type="button">Crear imagen aleatoria</button>
-          <button class="btn ghost" id="btnDownload" type="button" title="Descargar imagen actual">Descargar</button>
+    <noscript>
+      <p style="text-align:center;background:#fff8c5;border:1px solid #ffec99;border-radius:10px;padding:10px;">
+        Para ver las animaciones y el botón funcionando, habilita JavaScript.
+      </p>
+    </noscript>
+
+    <main id="gallery" class="grid is-hidden" aria-live="polite">
+      <!-- Card 1 -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://barranquilla.gov.co/wp-content/uploads/2018/05/barranquilla_01488-e1526962960257.jpg"
+               alt="Estadio Metropolitano de Barranquilla">
+        </figure>
+        <div class="content">
+          <h2>Estadio Metropolitano de Barranquilla</h2>
+          <p>Icono deportivo de la ciudad.</p>
         </div>
-        <span id="meta" class="meta" aria-live="polite"></span>
-      </footer>
-    </article>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://i.pinimg.com/736x/ea/c6/35/eac6359e09b915a9530f78563e6ddcea.jpg"
+               alt="El mejor ingeniero del mundo">
+        </figure>
+        <div class="content">
+          <h2>El mejor ingeniero del mundo</h2>
+          <p>Inspiración y disciplina.</p>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://picsum.photos/600/600"
+               alt="Imagen aleatoria de prueba">
+        </figure>
+        <div class="content">
+          <h2>Imagen Aleatoria de prueba</h2>
+          <p>Foto aleatoria (picsum).</p>
+        </div>
+      </article>
+
+      <!-- Card 4 (GIF) -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://media.tenor.com/YVKFAnJwA-oAAAAM/loyd.gif"
+               alt="GIF de Loid Forger">
+        </figure>
+        <div class="content">
+          <h2>Imagen de prueba 2</h2>
+          <p>Lloid respeta</p> <!-- cambiado -->
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="card" tabindex="0">
+        <figure class="media">
+          <img loading="lazy"
+               src="https://sm.ign.com/ign_es/screenshot/default/squirtle-1-1119670-1280x0_mbcx.jpg"
+               alt="Squirtle">
+        </figure>
+        <div class="content">
+          <h2>Imagen de prueba 3</h2>
+          <p>Reposado y chao</p> <!-- cambiado -->
+        </div>
+      </article>
+    </main>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

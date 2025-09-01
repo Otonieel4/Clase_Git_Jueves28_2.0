@@ -1,49 +1,46 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const img = document.getElementById('randomImg');
-  const skeleton = document.getElementById('skeleton');
-  const btn = document.getElementById('btnNew');
-  const btnDownload = document.getElementById('btnDownload');
-  const meta = document.getElementById('meta');
+// Lógica del botón + animaciones
+(function(){
+  const startBtn = document.getElementById('startBtn');
+  const gallery  = document.getElementById('gallery');
+  const body     = document.body;
 
-  function newSeed(){
-    return `${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
-  }
-  function updateMeta(url){
-    const t = new Date();
-    meta.textContent = `Fuente: picsum.photos · ${t.toLocaleTimeString()} (${t.toLocaleDateString()})`;
-    btnDownload.dataset.url = url;
-  }
-  function loadImage(){
-    const url = `https://picsum.photos/seed/${newSeed()}/600/600`;
-    skeleton.style.display = 'block';
-    img.classList.remove('loaded');
+  let shown = false;  // ¿ya mostramos la galería?
+  let theme = 1;      // theme-1..4
 
-    const pre = new Image();
-    pre.onload = () => {
-      img.src = url;
-      requestAnimationFrame(() => {
-        img.classList.add('loaded');
-        skeleton.style.display = 'none';
-        updateMeta(url);
-      });
-    };
-    pre.onerror = () => {
-      skeleton.style.display = 'none';
-      meta.textContent = 'Ups, no se pudo cargar. Intenta de nuevo.';
-    };
-    pre.src = url;
-  }
+  startBtn.addEventListener('click', () => {
+    if (!shown) {
+      // 1) Mostrar la galería con animación
+      gallery.classList.remove('is-hidden');
+      startBtn.setAttribute('aria-expanded', 'true');
+      revealCards();
+      shown = true;
 
-  btn.addEventListener('click', loadImage);
-  btnDownload.addEventListener('click', () => {
-    const url = btnDownload.dataset.url || img.src;
-    if(!url) return;
-    const a = document.createElement('a');
-    a.href = url; a.download = 'imagen-picsum.jpg';
-    document.body.appendChild(a);
-    a.click(); a.remove();
+      // Cambia el texto del botón para que sea más claro
+      startBtn.textContent = 'Cambiar color del fondo';
+    } else {
+      // 2) Cambiar la paleta del fondo
+      theme = theme % 4 + 1; // 1→2→3→4→1...
+      body.className = `theme-${theme}`;
+    }
   });
 
-  // Carga inicial
-  loadImage();
-});
+  // IntersectionObserver para activar .show en cada card
+  function revealCards(){
+    const cards = document.querySelectorAll('.card');
+
+    if (!('IntersectionObserver' in window)) {
+      cards.forEach(c => c.classList.add('show'));
+      return;
+    }
+    const obs = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+
+    cards.forEach(card => obs.observe(card));
+  }
+})();

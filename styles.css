@@ -1,64 +1,147 @@
+/* ---- Reset ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img { display: block; max-width: 100%; height: auto; }
+
+/* ---- Tema base ---- */
 :root{
-  --bg:#0f172a;
-  --text:#e5e7eb;
-  --muted:#94a3b8;
-  --ring:rgba(34,211,238,.35);
+  --surface: rgba(255,255,255,0.85);
+  --border: rgba(255,255,255,0.7);
+  --radius: 18px;
+  --shadow: 0 10px 24px rgba(0,0,0,0.12);
+  --shadow-hover: 0 20px 40px rgba(0,0,0,0.16);
+  --text: #0f172a;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg);color:var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial;}
-.wrap{min-height:100%;display:grid;place-items:center;padding:24px}
+/* Fondos por tema: body.theme-1..4 */
+body{
+  min-height:100vh;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
+  color: var(--text);
+  background-size: auto, auto, 200% 200%;
+  animation: bgShift 18s ease-in-out infinite alternate;
+}
+body.theme-1{
+  background:
+    radial-gradient(900px 600px at 10% 20%, #dbeafe 0%, transparent 60%),
+    radial-gradient(800px 500px at 90% 0%, #fde68a 0%, transparent 55%),
+    linear-gradient(120deg, #0ea5e9, #22c55e, #a855f7);
+}
+body.theme-2{
+  background:
+    radial-gradient(900px 600px at 10% 20%, #ffd6a5 0%, transparent 60%),
+    radial-gradient(800px 500px at 90% 0%, #ffadad 0%, transparent 55%),
+    linear-gradient(120deg, #ff7f50, #ff6b6b, #ff9ff3);
+}
+body.theme-3{
+  background:
+    radial-gradient(900px 600px at 10% 20%, #c7d2fe 0%, transparent 60%),
+    radial-gradient(800px 500px at 90% 0%, #99f6e4 0%, transparent 55%),
+    linear-gradient(120deg, #1e3a8a, #0ea5e9, #14b8a6);
+}
+body.theme-4{
+  background:
+    radial-gradient(900px 600px at 10% 20%, #e9d5ff 0%, transparent 60%),
+    radial-gradient(800px 500px at 90% 0%, #fecaca 0%, transparent 55%),
+    linear-gradient(120deg, #7c3aed, #ef4444, #60a5fa);
+}
+@keyframes bgShift {
+  0%   { background-position: 0 0, 0 0, 0% 50%; }
+  100% { background-position: 0 0, 0 0, 100% 50%; }
+}
+@media (prefers-reduced-motion: reduce){ body{ animation: none; } }
 
+/* ---- Layout ---- */
+.wrapper { max-width: 1200px; margin: 0 auto; padding: 28px; }
+.page-title { text-align:center; color:#0b1220; }
+.page-title h1{ margin: 8px 0 6px; font-weight: 800; letter-spacing:.2px; }
+.subtitle{ margin:0; opacity:.8; }
+
+/* Botón principal */
+.cta{
+  margin: 18px auto 8px;
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.6);
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.cta:hover{ transform: translateY(-2px); box-shadow: 0 16px 28px rgba(0,0,0,.16); }
+.cta:active{ transform: translateY(0); }
+.hint{ margin: 2px 0 0; opacity:.7; font-size:.9rem; }
+
+/* ---- Grid / Galería ---- */
+.grid{
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+/* Fallback: la galería es visible por defecto.
+   Solo se oculta si el documento tiene la clase .js (o sea, si hay JavaScript). */
+.js .is-hidden{ display: none; }
+
+/* ---- Card (progresivo: visibles sin JS) ---- */
 .card{
-  width:min(92vw, 680px);
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-  border:1px solid rgba(148,163,184,.2);
-  border-radius:24px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
-  overflow:hidden;
-  transform: translateY(0);
-  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
-  animation: cardPop .6s ease both;
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+
+  /* visibles sin JS */
+  transform: none;
+  opacity: 1;
+
+  transition: transform .35s cubic-bezier(.2,.8,.2,1),
+              box-shadow .35s ease,
+              opacity .45s ease;
   backdrop-filter: blur(4px);
 }
-.card:hover{ transform: translateY(-6px); box-shadow: 0 16px 44px rgba(0,0,0,.5), 0 0 0 8px var(--ring); }
-@keyframes cardPop{ from{opacity:0; transform: translateY(14px)} to{opacity:1; transform: translateY(0)} }
-
-header{ padding:20px 22px 0; }
-h1{ margin:0 0 6px; font-size: clamp(1.1rem, 1.5vw + 1rem, 1.8rem); letter-spacing:.3px; }
-.sub{ margin:0 0 14px; color:var(--muted); font-size:.98rem; }
-
-.media{
-  position:relative;
-  aspect-ratio: 1 / 1;
-  background: #0b1220;
-  border-top:1px solid rgba(148,163,184,.18);
-  border-bottom:1px solid rgba(148,163,184,.18);
-  display:grid; place-items:center;
+.card:hover, .card:focus-within{
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-hover);
 }
-#randomImg{ width:100%; height:100%; object-fit:cover; opacity:0; transform:scale(1.02);
-  transition: opacity .35s ease, transform .6s ease; }
-#randomImg.loaded{ opacity:1; transform:scale(1); }
 
-.skeleton{
+/* Modo animado (solo con JS) */
+.js .card{ transform: translateY(14px) scale(.98); opacity: 0; }
+.js .card.show{ transform: none; opacity: 1; }
+
+/* Brillo sutil */
+.card::after{
+  content:"";
   position:absolute; inset:0;
-  background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.09) 50%, rgba(255,255,255,0.05) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 1.15s linear infinite;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.45) 45%, transparent 60%);
+  transform: translateX(-120%);
+  pointer-events:none;
 }
-@keyframes shimmer{ to{ background-position: -200% 0 } }
+.card:hover::after{ transform: translateX(120%); transition: transform .9s ease; }
 
-footer{ padding:16px 22px 22px; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
-.btns{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+/* ---- Imagen: progresivo + animado ---- */
+.media{ height: 220px; background:#e5e7eb; overflow: hidden; }
+.media img{
+  width: 100%; height: 100%; object-fit: cover;
 
-.btn{ border:1px solid rgba(148,163,184,.45);
-  background: linear-gradient(180deg, rgba(56,189,248,.32), rgba(34,211,238,.22));
-  color:#081724; font-weight:700; padding:12px 16px; border-radius:14px; cursor:pointer;
-  transition: transform .08s ease, filter .2s ease, box-shadow .2s ease;
-  box-shadow: 0 6px 18px rgba(56,189,248,.25); }
-.btn:hover{ filter:saturate(1.12) brightness(1.06) }
-.btn:active{ transform: translateY(1px) }
-.btn.ghost{ background: transparent; color: var(--text); border:1px dashed rgba(148,163,184,.35); box-shadow:none; }
+  /* visibles sin JS */
+  transform: none;
+  opacity: 1;
 
-.meta{ font-size:.9rem; color:var(--muted); }
+  transition: transform .9s cubic-bezier(.2,.8,.2,1), opacity .9s ease;
+}
+.js .media img{ transform: scale(1.08); opacity: 0; filter: saturate(.95) contrast(.97); }
+.js .card.show .media img{ transform: scale(1); opacity: 1; filter: none; }
+.js .card.show:hover .media img{ transform: scale(1.03); }
+
+/* ---- Contenido ---- */
+.content{ padding: 14px 14px 18px; }
+.content h2{ margin: 4px 0 6px; font-size: 1.05rem; line-height: 1.2; }
+.content p{ margin:0; font-size:.92rem; opacity:.85; }
+
+/* ---- Accesibilidad ---- */
+.card:focus-within{ outline: 2px solid #22c55e55; outline-offset: 2px; }
