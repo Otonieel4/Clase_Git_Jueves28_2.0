@@ -7,39 +7,30 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="theme-1">
-  <!-- Overlay de inicio -->
+  <noscript>Esta página necesita JavaScript activado.</noscript>
+
+  <!-- Pantalla de inicio -->
   <div id="overlay" class="overlay" aria-labelledby="ov-title" aria-describedby="ov-desc">
     <div class="overlay-card">
       <h1 id="ov-title">¡Bienvenido!</h1>
       <p id="ov-desc" class="sub">Pulsa para iniciar la experiencia</p>
-      <button id="startBtn" class="btn start" type="button">
-        <span class="icon" aria-hidden="true">
-          <!-- icono de pala -->
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"
-               xmlns="http://www.w3.org/2000/svg">
-            <path d="M14.59 2.59a2 2 0 0 1 2.82 0l4 4a2 2 0 0 1 0 2.82l-2.12 2.12a3 3 0 0 1-2.12.88h-.59l-6.3 6.3a3.75 3.75 0 1 1-5.3-5.3l6.3-6.3v-.59c0-.8.32-1.56.88-2.12l2.12-2.12Zm1.41 1.41L13.88 6.12c-.19.19-.29.44-.29.71v1.17l-7.1 7.1a1.75 1.75 0 1 0 2.47 2.47l7.1-7.1h1.17c.27 0 .52-.11.71-.29l2.12-2.12-2.16-2.16Z"/>
-          </svg>
-        </span>
-        Empecemos ingeniero
-      </button>
+      <button id="startBtn" class="btn start" type="button">Empecemos ingeniero</button>
     </div>
   </div>
 
   <main class="wrap" id="app" aria-live="polite">
-    <!-- Card 1: Base64 (reemplaza el contenido del src por tu cadena completa) -->
+    <!-- Card 1 -->
     <article class="card revealable" data-delay="0">
       <header>
         <h2>Estadio Metropolitano de Barranquilla</h2>
         <p class="sub">Imagen embebida (base64)</p>
       </header>
       <div class="media">
-        <img
-          src="data:image/jpeg;base64, AQUI_TU_CADENA_BASE64_COMPLETA"
-          alt="Estadio Metropolitano de Barranquilla" />
+        <img src="" alt="Estadio Metropolitano de Barranquilla" />
       </div>
     </article>
 
-    <!-- Card 2: Externa -->
+    <!-- Card 2 -->
     <article class="card revealable" data-delay="300">
       <header>
         <h2>Ventana del Mundo</h2>
@@ -47,31 +38,4 @@
       </header>
       <div class="media">
         <img
-          src="https://m.portafolio.co/files/article_content/uploads/2018/08/14/5b73a2e753501.jpeg"
-          alt="Ventana del Mundo de Barranquilla" />
-      </div>
-    </article>
-
-    <!-- Card 3: Imagen aleatoria de Picsum -->
-    <article class="card revealable" data-delay="600" aria-labelledby="title" aria-describedby="desc">
-      <header>
-        <h2 id="title">Imagen aleatoria de Picsum</h2>
-        <p id="desc" class="sub">Pulsa el botón para generar otra imagen (600×600)</p>
-      </header>
-      <div class="media">
-        <div id="skeleton" class="skeleton" aria-hidden="true"></div>
-        <img id="randomImg" src="" alt="Imagen aleatoria de Picsum" />
-      </div>
-      <footer>
-        <div class="btns">
-          <button class="btn" id="btnNew" type="button">Crear imagen aleatoria</button>
-          <button class="btn ghost" id="btnDownload" type="button" title="Descargar imagen actual">Descargar</button>
-        </div>
-        <span id="meta" class="meta"></span>
-      </footer>
-    </article>
-  </main>
-
-  <script src="script.js" defer></script>
-</body>
-</html>
+          src="https://m.portafolio.co/files/article
