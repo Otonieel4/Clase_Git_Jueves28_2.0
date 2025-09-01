@@ -2,40 +2,33 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Galería Barranquilla + Picsum</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Imagen aleatoria | Card animada</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="theme-1">
-  <noscript>Esta página necesita JavaScript activado.</noscript>
+<body>
+  <div class="wrap">
+    <article class="card" aria-labelledby="title" aria-describedby="desc">
+      <header>
+        <h1 id="title">Imagen aleatoria de <span style="color:#38bdf8">Picsum</span></h1>
+        <p id="desc" class="sub">Pulsa el botón para generar otra imagen (600×600). Hay animación y skeleton ✨</p>
+      </header>
 
-  <!-- Pantalla de inicio -->
-  <div id="overlay" class="overlay" aria-labelledby="ov-title" aria-describedby="ov-desc">
-    <div class="overlay-card">
-      <h1 id="ov-title">¡Bienvenido!</h1>
-      <p id="ov-desc" class="sub">Pulsa para iniciar la experiencia</p>
-      <button id="startBtn" class="btn start" type="button">Empecemos ingeniero</button>
-    </div>
+      <div class="media">
+        <div id="skeleton" class="skeleton" aria-hidden="true"></div>
+        <img id="randomImg" src="" alt="Imagen aleatoria de Picsum" />
+      </div>
+
+      <footer>
+        <div class="btns">
+          <button class="btn" id="btnNew" type="button">Crear imagen aleatoria</button>
+          <button class="btn ghost" id="btnDownload" type="button" title="Descargar imagen actual">Descargar</button>
+        </div>
+        <span id="meta" class="meta" aria-live="polite"></span>
+      </footer>
+    </article>
   </div>
 
-  <main class="wrap" id="app" aria-live="polite">
-    <!-- Card 1 -->
-    <article class="card revealable" data-delay="0">
-      <header>
-        <h2>Estadio Metropolitano de Barranquilla</h2>
-        <p class="sub">Imagen embebida (base64)</p>
-      </header>
-      <div class="media">
-        <img src="" alt="Estadio Metropolitano de Barranquilla" />
-      </div>
-    </article>
-
-    <!-- Card 2 -->
-    <article class="card revealable" data-delay="300">
-      <header>
-        <h2>Ventana del Mundo</h2>
-        <p class="sub">Imagen externa (Portafolio)</p>
-      </header>
-      <div class="media">
-        <img
-          src="https://m.portafolio.co/files/article
+  <script src="script.js"></script>
+</body>
+</html>
